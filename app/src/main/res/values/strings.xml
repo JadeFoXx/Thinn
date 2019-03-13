@@ -12,5 +12,7 @@
     <string name="main_label_tdee">TDEE</string>
     <string name="main_button_consume">Consume</string>
     <string name="main_button_undo">Undo</string>
+    <string name="main_button_add_meal">Add Meal</string>
     <string name="recyclerview_item_card_name_placeholder">Lappings Döner</string>
+    <string name="thinn_pref">thinn_pref</string>
 </resources>

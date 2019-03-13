@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ludwig.samuel.thinn.R;
+import ludwig.samuel.thinn.data.Meal;
+import ludwig.samuel.thinn.data.Meals;
+import ludwig.samuel.thinn.data.Stats;
+import ludwig.samuel.thinn.data.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -112,5 +116,21 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        User.getInstance().save(this);
+        Stats.getInstance().save(this);
+        Meals.getInstance().save(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User.getInstance().restore(this);
+        Stats.getInstance().restore(this);
+        Meals.getInstance().restore(this);
     }
 }
