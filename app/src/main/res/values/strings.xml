@@ -5,4 +5,12 @@
     <string name="main_label_cal_consumed">Calories consumed</string>
     <string name="main_label_cal_left">Calories left</string>
     <string name="main_cal_placeholder">2340</string>
+    <string name="main_label_cal_daily">Daily Calories</string>
+    <string name="main_label_cal_deficit">Calorie deficit</string>
+    <string name="main_label_cal_surplus">Calorie surplus</string>
+    <string name="main_label_base_mbr">BMR</string>
+    <string name="main_label_tdee">TDEE</string>
+    <string name="main_button_consume">Consume</string>
+    <string name="main_button_undo">Undo</string>
+    <string name="recyclerview_item_card_name_placeholder">Lappings Döner</string>
 </resources>
