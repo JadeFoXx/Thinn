@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="50dp">
+    
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/dialog_add_meal_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded_accent"
+                android:textSize="25sp"
+                android:layout_margin="10dp"
+                android:hint="Name"
+                android:gravity="center"
+                android:textColor="@color/colorDark"/>
+
+            <EditText
+                android:id="@+id/dialog_add_meal_calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded_accent"
+                android:textSize="25sp"
+                android:layout_margin="10dp"
+                android:hint="Calories"
+                android:gravity="center"
+                android:textColor="@color/colorDark"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    
+    <android.support.v7.widget.CardView
+        android:id="@+id/dialog_add_meal_add"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:text="@string/main_button_add_meal"
+            android:textColor="@color/colorDark"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

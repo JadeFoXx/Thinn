@@ -1,66 +1,45 @@
 package ludwig.samuel.thinn.ui;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
+import android.widget.EditText;
 
 import ludwig.samuel.thinn.R;
 import ludwig.samuel.thinn.data.Meal;
 import ludwig.samuel.thinn.data.Meals;
 import ludwig.samuel.thinn.data.Stats;
 import ludwig.samuel.thinn.data.User;
+import ludwig.samuel.thinn.databinding.ActivityMainBinding;
+import ludwig.samuel.thinn.util.MealAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainFragment mainFragment;
+    private RecyclerView mealRecyclerView;
+    private MealAdapter mealAdapter;
 
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainBinding.setStats(Stats.getInstance());
+        mainBinding.setUser(User.getInstance());
+        mealRecyclerView = (RecyclerView)mainBinding.getRoot().findViewById(R.id.main_recylcerview_common_meals);
+        Meals.getInstance().restore(this);
+        mealAdapter = new MealAdapter(Meals.getInstance().getMeals());
+        mealRecyclerView.setAdapter(mealAdapter);
+        mealRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mealAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,44 +57,59 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent settingsIntent = new Intent(this, settingsActivity.class);
+            startActivity(settingsIntent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public void onAddMealClick(View view) {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0 :
-                    mainFragment = MainFragment.newInstance(position, getPageTitle(position).toString());
-                    return mainFragment;
+        final AlertDialog addMealDialog = new AlertDialog.Builder(this).create();
+        View addMealView = LayoutInflater.from(this).inflate(R.layout.dialog_add_meal, null);
+        final EditText addMealName = (EditText)addMealView.findViewById(R.id.dialog_add_meal_name);
+        final EditText addMealCalories = (EditText)addMealView.findViewById(R.id.dialog_add_meal_calories);
+        View buttonAddMeal = (View)addMealView.findViewById(R.id.dialog_add_meal_add);
+        buttonAddMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = addMealName.getText().toString();
+                String calories = addMealCalories.getText().toString();
+                if(!name.isEmpty() && !calories.isEmpty()) {
+                    Meals.getInstance().getMeals().add(new Meal(name, Integer.valueOf(calories)));
+                    mealAdapter.refresh();
+                }
+                addMealDialog.dismiss();
             }
-            return null;
-        }
+        });
+        addMealDialog.setView(addMealView);
+        addMealDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        addMealDialog.show();
+    }
 
-        @Override
-        public int getCount() {
-            return 1;
-        }
-
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0 :
-                    return "Overview";
+    public void onConsumeClick(View view) {
+        final AlertDialog consumeDialog = new AlertDialog.Builder(this).create();
+        View consumeView = LayoutInflater.from(this).inflate(R.layout.dialog_consume, null);
+        final EditText consumeConsume = (EditText)consumeView.findViewById(R.id.dialog_consume_calories);
+        View buttonConsume = (View)consumeView.findViewById(R.id.dialog_consume_consume);
+        buttonConsume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String calories = consumeConsume.getText().toString();
+                if(!calories.isEmpty()) {
+                    Stats.getInstance().consume(Integer.valueOf(calories));
+                }
+                consumeDialog.dismiss();
             }
-            return null;
-        }
+        });
+        consumeDialog.setView(consumeView);
+        consumeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        consumeDialog.show();
+    }
+
+    public void onUndoClick(View view) {
+        Stats.getInstance().undo();
     }
 
     @Override

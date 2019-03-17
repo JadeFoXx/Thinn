@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Meals {
     private static Meals instance;
-    private ArrayList<Meal> meals;
+    private ArrayList<Meal> meals = new ArrayList<Meal>();
 
     public static Meals getInstance() {
         if(instance == null){

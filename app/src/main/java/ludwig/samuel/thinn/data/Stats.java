@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayDeque;
-import java.util.Calendar;
 import java.util.Deque;
 import java.util.List;
 
@@ -88,13 +87,10 @@ public class Stats extends BaseObservable {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
         caloriesConsumed = sharedPreferences.getInt("caloriesConsumed", 0);
         caloriesLeft = sharedPreferences.getInt("caloriesLeft", User.getInstance().getDailyCalories());
-        recentCaloriesConsumed = jsonToString(sharedPreferences.getString("recentCaloriesConsumed", null));
+        recentCaloriesConsumed =  jsonToString(sharedPreferences.getString("recentCaloriesConsumed", null));
         lastDate = sharedPreferences.getLong("lastDate", -1);
         if(lastDate == -1 || lastDate != Today.get()) {
-            lastDate = Today.get();
-            setCaloriesLeft(User.getInstance().getDailyCalories());
-            setCaloriesConsumed(0);
-            recentCaloriesConsumed.clear();
+            purge(context);
         }
     }
 
@@ -111,6 +107,14 @@ public class Stats extends BaseObservable {
             }.getType()));
         }
         return deque;
+    }
+
+    private void purge(Context context) {
+        lastDate = Today.get();
+        setCaloriesLeft(User.getInstance().getDailyCalories());
+        setCaloriesConsumed(0);
+        recentCaloriesConsumed.clear();
+        save(context);
     }
 
 }

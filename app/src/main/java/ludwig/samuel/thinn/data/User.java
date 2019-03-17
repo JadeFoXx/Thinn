@@ -5,21 +5,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import ludwig.samuel.thinn.BR;
 
 
 public class User extends BaseObservable {
     private static User instance;
     private String sex = "male";
-    private int age = 25;
-    private int height = 197;
-    private int weight = 120;
-    private int neckCircumference = 45;
-    private int waistCircumference = 126;
-    private int hipCircumference = 140;
-    private double activity = 1.2;
-    private int delta = -500;
+    private String age = "25";
+    private String height = "197";
+    private String weight = "120";
+    private String neckCircumference = "45";
+    private String waistCircumference = "126";
+    private String hipCircumference = "140";
+    private String activity = "1.2";
+    private String delta = "-500";
 
 
     public static User getInstance() {
@@ -35,64 +34,79 @@ public class User extends BaseObservable {
     }
 
     @Bindable
-    public int getAge() {
+    public String getAge() {
         return this.age;
     }
 
     @Bindable
-    public int getHeight() {
+    public String getHeight() {
         return this.height;
     }
 
     @Bindable
-    public int getWeight() {
+    public String getWeight() {
         return this.weight;
     }
 
     @Bindable
-    public int getNeckCircumference() {
+    public String getNeckCircumference() {
         return neckCircumference;
     }
 
     @Bindable
-    public int getWaistCircumference() {
+    public String getWaistCircumference() {
         return waistCircumference;
     }
 
     @Bindable
-    public int getHipCircumference() {
+    public String getHipCircumference() {
         return hipCircumference;
     }
+
+    private int sti(String string) {
+        if(!string.isEmpty()) {
+            return Integer.valueOf(string);
+        }
+        return 0;
+    }
+
+    private double std(String string) {
+        if(!string.isEmpty()) {
+            return Double.valueOf(string);
+        }
+        return 0;
+    }
+
 
     @Bindable
     public int getBodyfatPercentage() {
         if (sex.equals("male")) {
-            return (int) (495 / (1.0324 - 0.19077 * Math.log10(waistCircumference - neckCircumference) + 0.15456 * Math.log10(height)) - 450 + 0.5);
+            return (int) (495 / (1.0324 - 0.19077 * Math.log10(sti(waistCircumference) - sti(neckCircumference)) + 0.15456 * Math.log10(sti(height))) - 450 + 0.5);
         } else {
-            return (int) (495 / (1.29579 - 0.35004 * Math.log10(waistCircumference + hipCircumference - neckCircumference) + 0.22100 * Math.log10(height)) - 450 + 0.5);
+            return (int) (495 / (1.29579 - 0.35004 * Math.log10(sti(waistCircumference) + sti(hipCircumference) - sti(neckCircumference)) + 0.22100 * Math.log10(sti(height))) - 450 + 0.5);
         }
     }
 
     @Bindable
-    public double getActivity() {
+    public String getActivity() {
         return activity;
     }
 
     @Bindable
     public int getTdee() {
-        double leanBodyMass = weight * (1 - (getBodyfatPercentage() / 100.0));
+        double leanBodyMass = sti(weight) * (1 - (getBodyfatPercentage() / 100.0));
         double rdee = 370 + (21.6 * leanBodyMass);
-        return (int) (activity * rdee);
+        return (int) (std(activity) * rdee);
     }
 
     @Bindable
-    public int getDelta() {
+    public String getDelta() {
         return delta;
     }
 
     @Bindable
     public int getDailyCalories() {
-        return getTdee() + delta;
+        return getTdee() + sti(delta);
     }
 
 
@@ -102,37 +116,37 @@ public class User extends BaseObservable {
         notifyPropertyChanged(BR.sex);
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
         setTdee();
         notifyPropertyChanged(BR.age);
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
         setTdee();
         notifyPropertyChanged(BR.height);
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
         setTdee();
         notifyPropertyChanged(BR.weight);
     }
 
-    public void setNeckCircumference(int circumference) {
+    public void setNeckCircumference(String circumference) {
         this.neckCircumference = circumference;
         setBodyfatPercentage();
         notifyPropertyChanged(BR.neckCircumference);
     }
 
-    public void setWaistCircumference(int circumference) {
+    public void setWaistCircumference(String circumference) {
         this.waistCircumference = circumference;
         setBodyfatPercentage();
         notifyPropertyChanged(BR.waistCircumference);
     }
 
-    public void setHipCircumference(int circumference) {
+    public void setHipCircumference(String circumference) {
         this.hipCircumference = circumference;
         setBodyfatPercentage();
         notifyPropertyChanged(BR.hipCircumference);
@@ -143,7 +157,7 @@ public class User extends BaseObservable {
         notifyPropertyChanged(BR.bodyfatPercentage);
     }
 
-    public void setActivity(double activity) {
+    public void setActivity(String activity) {
         this.activity = activity;
         setTdee();
         notifyPropertyChanged(BR.activity);
@@ -154,7 +168,7 @@ public class User extends BaseObservable {
         notifyPropertyChanged(BR.tdee);
     }
 
-    public void setDelta(int delta) {
+    public void setDelta(String delta) {
         this.delta = delta;
         setDailyCalories();
         notifyPropertyChanged(BR.delta);
@@ -168,27 +182,27 @@ public class User extends BaseObservable {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("sex", sex);
-        editor.putInt("age", age);
-        editor.putInt("height", height);
-        editor.putInt("weight", weight);
-        editor.putInt("neckCircumference", neckCircumference);
-        editor.putInt("waistCircumference", waistCircumference);
-        editor.putInt("hipCircumference", waistCircumference);
+        editor.putString("age", age);
+        editor.putString("height", height);
+        editor.putString("weight", weight);
+        editor.putString("neckCircumference", neckCircumference);
+        editor.putString("waistCircumference", waistCircumference);
+        editor.putString("hipCircumference", waistCircumference);
         editor.putString("activity", String.valueOf(activity));
-        editor.putInt("delta", delta);
+        editor.putString("delta", delta);
         editor.commit();
     }
 
     public void restore(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_user", Context.MODE_PRIVATE);
         sex = sharedPreferences.getString("sex", "male");
-        age = sharedPreferences.getInt("age", 25);
-        height = sharedPreferences.getInt("height", 197);
-        weight = sharedPreferences.getInt("weight", 120);
-        neckCircumference = sharedPreferences.getInt("neckCircumference", 45);
-        waistCircumference = sharedPreferences.getInt("waistCircumference", 126);
-        hipCircumference = sharedPreferences.getInt("hipCircumference", 140);
-        activity = Double.valueOf(sharedPreferences.getString("activity", "1.2"));
-        delta = sharedPreferences.getInt("delta", -500);
+        age = sharedPreferences.getString("age", "25");
+        height = sharedPreferences.getString("height", "197");
+        weight = sharedPreferences.getString("weight", "120");
+        neckCircumference = sharedPreferences.getString("neckCircumference", "45");
+        waistCircumference = sharedPreferences.getString("waistCircumference", "126");
+        hipCircumference = sharedPreferences.getString("hipCircumference", "140");
+        activity = sharedPreferences.getString("activity", "1.2");
+        delta = sharedPreferences.getString("delta", "-500");
     }
 }
