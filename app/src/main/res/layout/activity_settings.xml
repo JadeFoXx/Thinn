@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.widget.EditText"/>
+        <import type="ludwig.samuel.thinn.util.BindingConverter"/>
         <variable
             name="user"
             type="ludwig.samuel.thinn.data.User"/>
+
     </data>
 
 
@@ -101,8 +102,10 @@
                     android:hint="Your Age"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.age}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsAge, user.age, user.age)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
+                    />
 
             </LinearLayout>
 
@@ -140,8 +143,9 @@
                     android:hint="Your Height"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.height}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsHeight, user.height, user.height)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -178,8 +182,9 @@
                     android:hint="Your Weight"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.weight}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsWeight, user.weight, user.weight)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -217,8 +222,9 @@
                     android:hint="Your Neck Circumference"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.neckCircumference}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsNeck, user.neckCircumference, user.neckCircumference)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -255,8 +261,9 @@
                     android:hint="Your Waist Circumference"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.waistCircumference}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsWaist, user.waistCircumference, user.waistCircumference)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -294,8 +301,9 @@
                     android:hint="Your Hip Circumference"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.hipCircumference}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsHip, user.hipCircumference, user.hipCircumference)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -332,8 +340,9 @@
                     android:hint="Your Physical Activity"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.activity}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.doubleToString(settingsActivity, user.activity, user.activity)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 
@@ -370,8 +379,9 @@
                     android:hint="Desired Calorie Deficit"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:text="@={user.delta}"
-                    android:inputType="number"/>
+                    android:text="@={BindingConverter.intToString(settingsDelta, user.delta, user.delta)}"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/edittext_cursor"/>
 
             </LinearLayout>
 

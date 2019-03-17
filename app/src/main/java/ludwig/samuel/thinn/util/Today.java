@@ -1,5 +1,4 @@
 package ludwig.samuel.thinn.util;
-
 import java.util.Calendar;
 
 public class Today {
