@@ -187,7 +187,7 @@ public class User extends BaseObservable {
         editor.putString("weight", weight);
         editor.putString("neckCircumference", neckCircumference);
         editor.putString("waistCircumference", waistCircumference);
-        editor.putString("hipCircumference", waistCircumference);
+        editor.putString("hipCircumference", hipCircumference);
         editor.putString("activity", String.valueOf(activity));
         editor.putString("delta", delta);
         editor.commit();
