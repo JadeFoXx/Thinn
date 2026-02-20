@@ -11,381 +11,375 @@
 
     </data>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorPaleAccent">
 
-        <androidx.cardview.widget.CardView
+        <!-- Settings title + swipe hint -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_margin="5dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/spacing_xl"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_lg">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/action_settings"
+                android:textColor="@color/colorForeground"
+                android:textSize="@dimen/text_value"
+                android:textStyle="bold" />
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="swipe to go back"
+                android:textColor="@color/colorBorder"
+                android:textSize="@dimen/text_label" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+        </LinearLayout>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_radio_button_male"
-                        android:textSize="20sp"
-                        />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_radio_button_female"
-                        android:textSize="20sp"
-                        />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <!-- Gender radio row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/settings_sex_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <TextView
+                <Space
                     android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_age"
-                    android:gravity="center"
-                    android:textSize="20sp"/>
-
-                <EditText
-                    android:id="@+id/settings_age"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Age"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsAge, user.age, user.age)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"
-                    />
+                    android:layout_weight="1"/>
 
-            </LinearLayout>
+                <RadioButton
+                    android:id="@+id/settings_radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_radio_button_male"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/colorForeground" />
 
-        </androidx.cardview.widget.CardView>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
-        <androidx.cardview.widget.CardView
+                <RadioButton
+                    android:id="@+id/settings_radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_radio_button_female"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/colorForeground" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <!-- Age row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_age"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_age"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Age"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsAge, user.age, user.age)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_height"
-                    android:gravity="center"
-                    android:textSize="20sp"/>
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_height"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Height"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsHeight, user.height, user.height)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
+        <!-- Height row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_height"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_height"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Height"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsHeight, user.height, user.height)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_weight"
-                    android:gravity="center"
-                    android:textSize="20sp"/>
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_weight"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Weight"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsWeight, user.weight, user.weight)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <!-- Weight row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_weight"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_weight"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Weight"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsWeight, user.weight, user.weight)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_neck"
-                    android:gravity="center"
-                    />
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_neck"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Neck Circumference"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsNeck, user.neckCircumference, user.neckCircumference)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <!-- Neck row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_neck"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_neck"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Neck Circumference"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsNeck, user.neckCircumference, user.neckCircumference)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_waist"
-                    android:gravity="center"/>
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_waist"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Waist Circumference"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsWaist, user.waistCircumference, user.waistCircumference)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
+        <!-- Waist row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_waist"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
 
-        </androidx.cardview.widget.CardView>
+            <EditText
+                android:id="@+id/settings_waist"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Waist Circumference"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsWaist, user.waistCircumference, user.waistCircumference)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-        <androidx.cardview.widget.CardView
+        </LinearLayout>
+
+        <!-- Hip row -->
+        <LinearLayout
             android:id="@+id/settings_hip_circumference"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_hip"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_hip"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Your Hip Circumference"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsHip, user.hipCircumference, user.hipCircumference)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_hip"
-                    android:gravity="center"/>
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_hip"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Hip Circumference"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsHip, user.hipCircumference, user.hipCircumference)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <!-- Activity row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_activity"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <Spinner
+                android:id="@+id/settings_activity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:entries="@array/activity_levels" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_activiy"
-                    android:gravity="center"/>
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/settings_activity"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Your Physical Activity"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.doubleToString(settingsActivity, user.activity, user.activity)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <!-- Deficit row -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="@dimen/settings_row_height"
+            android:background="@drawable/card_border"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_deficit"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorMuted" />
+
+            <EditText
+                android:id="@+id/settings_deficit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:background="@drawable/edittext_rounded_accent"
+                android:hint="Desired Calorie Deficit"
+                android:gravity="center"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/colorForeground"
+                android:text="@={BindingConverter.intToString(settingsDeficit, user.deficit, user.deficit)}"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/edittext_cursor" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_label_delta"
-                    android:gravity="center"/>
-
-                <EditText
-                    android:id="@+id/settings_delta"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edittext_rounded_accent"
-                    android:hint="Desired Calorie Deficit"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@={BindingConverter.intToString(settingsDelta, user.delta, user.delta)}"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/edittext_cursor"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

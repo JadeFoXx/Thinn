@@ -1,66 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="50dp">
-    
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="5dp"
-        android:layout_margin="5dp">
+    android:layout_margin="32dp">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_border"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg">
+
+        <!-- Dialog title -->
+        <TextView
+            android:id="@+id/dialog_add_meal_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_title_add_meal"
+            android:textColor="@color/colorForeground"
+            android:textSize="@dimen/text_value"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
-            <EditText
-                android:id="@+id/dialog_add_meal_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_rounded_accent"
-                android:textSize="25sp"
-                android:layout_margin="10dp"
-                android:hint="Name"
-                android:gravity="center"
-                android:textColor="@color/colorDark"/>
-
-            <EditText
-                android:id="@+id/dialog_add_meal_calories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_rounded_accent"
-                android:textSize="25sp"
-                android:layout_margin="10dp"
-                android:hint="Calories"
-                android:gravity="center"
-                android:textColor="@color/colorDark"
-                android:inputType="number"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-    
-    <androidx.cardview.widget.CardView
-        android:id="@+id/dialog_add_meal_add"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="5dp">
-
+        <!-- Name input -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:text="@string/main_button_add_meal"
-            android:textColor="@color/colorDark"/>
+            android:text="Name"
+            android:textColor="@color/colorMuted"
+            android:textSize="@dimen/text_label"
+            android:layout_marginBottom="@dimen/spacing_xs" />
 
-    </androidx.cardview.widget.CardView>
+        <EditText
+            android:id="@+id/dialog_add_meal_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/edittext_rounded"
+            android:textSize="@dimen/text_body"
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:textColor="@color/colorForeground"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Calories input -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories"
+            android:textColor="@color/colorMuted"
+            android:textSize="@dimen/text_label"
+            android:layout_marginBottom="@dimen/spacing_xs" />
+
+        <EditText
+            android:id="@+id/dialog_add_meal_calories"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/edittext_rounded"
+            android:textSize="@dimen/text_body"
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:textColor="@color/colorForeground"
+            android:inputType="number"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Color label + preview -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/spacing_sm">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Color"
+                android:textColor="@color/colorMuted"
+                android:textSize="@dimen/text_label" />
+
+            <View
+                android:id="@+id/dialog_color_preview"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+        </LinearLayout>
+
+        <!-- Color picker bar -->
+        <ludwig.samuel.thinn.ui.ColorPickerBar
+            android:id="@+id/dialog_color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="@dimen/spacing_lg" />
+
+        <!-- Action button -->
+        <LinearLayout
+            android:id="@+id/dialog_add_meal_add"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_primary"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/dialog_add_meal_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_button"
+                android:text="@string/main_button_add_meal"
+                android:textColor="@color/colorPrimaryForeground" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffb300</color>
-    <color name="colorPrimaryDark">#c68400</color>
-    <color name="colorAccent">#ffe54c</color>
-    <color name="colorPaleAccent">#ffffff</color>
-    <color name="colorBright">#ffffff</color>
-    <color name="colorDark">#000000</color>
+    <!-- Legacy names preserved — dark palette -->
+    <color name="colorPrimary">#FAFAFA</color>
+    <color name="colorPrimaryDark">#09090B</color>
+    <color name="colorAccent">#3B82F6</color>
+    <color name="colorPaleAccent">#09090B</color>
+    <color name="colorBright">#FAFAFA</color>
+    <color name="colorDark">#FAFAFA</color>
+
+    <!-- Semantic colors -->
+    <color name="colorForeground">#FAFAFA</color>
+    <color name="colorMuted">#A1A1AA</color>
+    <color name="colorBorder">#27272A</color>
+    <color name="colorCard">#18181B</color>
+    <color name="colorInput">#27272A</color>
+    <color name="colorPrimaryForeground">#09090B</color>
 </resources>

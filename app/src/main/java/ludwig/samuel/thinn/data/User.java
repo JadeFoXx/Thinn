@@ -18,7 +18,7 @@ public class User extends BaseObservable {
     private int waistCircumference = 126;
     private int hipCircumference = 140;
     private double activity = 1.2;
-    private int delta = -500;
+    private int deficit = 500;
 
 
     public static User getInstance() {
@@ -86,13 +86,13 @@ public class User extends BaseObservable {
     }
 
     @Bindable
-    public int getDelta() {
-        return delta;
+    public int getDeficit() {
+        return deficit;
     }
 
     @Bindable
     public int getDailyCalories() {
-        return getTdee() - delta;
+        return getTdee() - deficit;
     }
 
 
@@ -154,10 +154,10 @@ public class User extends BaseObservable {
         notifyPropertyChanged(BR.tdee);
     }
 
-    public void setDelta(int delta) {
-        this.delta = delta;
+    public void setDeficit(int deficit) {
+        this.deficit = deficit;
         setDailyCalories();
-        notifyPropertyChanged(BR.delta);
+        notifyPropertyChanged(BR.deficit);
     }
 
     public void setDailyCalories() {
@@ -173,9 +173,9 @@ public class User extends BaseObservable {
         editor.putInt("weight", weight);
         editor.putInt("neckCircumference", neckCircumference);
         editor.putInt("waistCircumference", waistCircumference);
-        editor.putInt("hipCircumference", waistCircumference);
+        editor.putInt("hipCircumference", hipCircumference);
         editor.putString("activity", String.valueOf(activity));
-        editor.putInt("delta", delta);
+        editor.putInt("deficit", deficit);
         editor.commit();
     }
 
@@ -188,7 +188,7 @@ public class User extends BaseObservable {
         neckCircumference = sharedPreferences.getInt("neckCircumference", 45);
         waistCircumference = sharedPreferences.getInt("waistCircumference", 126);
         hipCircumference = sharedPreferences.getInt("hipCircumference", 140);
-        activity = Double.valueOf(sharedPreferences.getString("activity", "1.2"));
-        delta = sharedPreferences.getInt("delta", -500);
+        activity = Double.parseDouble(sharedPreferences.getString("activity", "1.2"));
+        deficit = sharedPreferences.getInt("deficit", 500);
     }
 }

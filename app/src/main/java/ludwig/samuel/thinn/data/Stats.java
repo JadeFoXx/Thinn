@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class Stats extends BaseObservable {
     private static Stats instance;
     private int calorieLimit = 0;
     private Deque<Integer> recentCaloriesConsumed = new ArrayDeque<>();
+    private Deque<String> recentMealNames = new ArrayDeque<>();
+    private Deque<Integer> recentMealColors = new ArrayDeque<>();
     private long lastDate;
 
     public static Stats getInstance() {
@@ -37,12 +41,22 @@ public class Stats extends BaseObservable {
         return caloriesConsumed;
     }
 
-    public void consume(int amount) {
+    public void consume(int amount, String name, int color) {
         if(amount > 0) {
             recentCaloriesConsumed.push(amount);
+            recentMealNames.push(name);
+            recentMealColors.push(color);
         }
         notifyPropertyChanged(BR.caloriesConsumed);
         notifyPropertyChanged(BR.caloriesLeft);
+    }
+
+    public void consume(int amount, String name) {
+        consume(amount, name, Meal.DEFAULT_COLOR);
+    }
+
+    public void consume(int amount) {
+        consume(amount, String.valueOf(amount) + " cal", Meal.DEFAULT_COLOR);
     }
 
     @Bindable
@@ -73,8 +87,28 @@ public class Stats extends BaseObservable {
         this.lastDate = lastDate;
     }
 
+    public List<Integer> getConsumedSegments() {
+        List<Integer> list = new ArrayList<>(recentCaloriesConsumed);
+        Collections.reverse(list);
+        return list;
+    }
+
+    public List<String> getConsumedNames() {
+        List<String> list = new ArrayList<>(recentMealNames);
+        Collections.reverse(list);
+        return list;
+    }
+
+    public List<Integer> getConsumedColors() {
+        List<Integer> list = new ArrayList<>(recentMealColors);
+        Collections.reverse(list);
+        return list;
+    }
+
     public void undo() {
         if(!recentCaloriesConsumed.isEmpty()) {
+            recentMealNames.pop();
+            recentMealColors.pop();
             consume(-1* recentCaloriesConsumed.pop());
         }
     }
@@ -83,32 +117,45 @@ public class Stats extends BaseObservable {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("calorieLimit", calorieLimit);
-        editor.putString("recentCaloriesConsumed", dequeToJson(recentCaloriesConsumed));
+        editor.putString("recentCaloriesConsumed", new Gson().toJson(recentCaloriesConsumed));
+        editor.putString("recentMealNames", new Gson().toJson(recentMealNames));
+        editor.putString("recentMealColors", new Gson().toJson(recentMealColors));
         editor.putLong("lastDate", lastDate);
         editor.commit();
     }
 
     public void restore(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
-        calorieLimit = sharedPreferences.getInt("calorieLimit", User.getInstance().getDailyCalories());
-        recentCaloriesConsumed =  jsonToString(sharedPreferences.getString("recentCaloriesConsumed", null));
+        calorieLimit = User.getInstance().getDailyCalories();
+        recentCaloriesConsumed = jsonToInts(sharedPreferences.getString("recentCaloriesConsumed", null));
+        recentMealNames = jsonToStrings(sharedPreferences.getString("recentMealNames", null));
+        recentMealColors = jsonToInts(sharedPreferences.getString("recentMealColors", null));
         lastDate = sharedPreferences.getLong("lastDate", -1);
         if(lastDate == -1 || lastDate != Today.get()) {
             purge(context);
         }
     }
 
-    private String dequeToJson(Deque<Integer> deque) {
-        Gson gson = new Gson();
-        return gson.toJson(deque);
-    }
-
-    private Deque<Integer> jsonToString(String json) {
+    private Deque<Integer> jsonToInts(String json) {
         Gson gson = new Gson();
         Deque<Integer> deque = new ArrayDeque<>();
         if(json != null) {
-            deque.addAll(gson.fromJson(json, new TypeToken<List<Integer>>() {
-            }.getType()));
+            List<Integer> list = gson.fromJson(json, new TypeToken<List<Integer>>() {}.getType());
+            if(list != null) {
+                deque.addAll(list);
+            }
+        }
+        return deque;
+    }
+
+    private Deque<String> jsonToStrings(String json) {
+        Gson gson = new Gson();
+        Deque<String> deque = new ArrayDeque<>();
+        if(json != null) {
+            List<String> list = gson.fromJson(json, new TypeToken<List<String>>() {}.getType());
+            if(list != null) {
+                deque.addAll(list);
+            }
         }
         return deque;
     }
@@ -117,6 +164,8 @@ public class Stats extends BaseObservable {
         lastDate = Today.get();
         setCalorieLimit(User.getInstance().getDailyCalories());
         recentCaloriesConsumed.clear();
+        recentMealNames.clear();
+        recentMealColors.clear();
         save(context);
     }
 

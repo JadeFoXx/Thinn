@@ -2,6 +2,7 @@ package ludwig.samuel.thinn.util;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,17 @@ import ludwig.samuel.thinn.data.Stats;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
 
-    private ArrayList<Meal> dataSet = new ArrayList<Meal>();
+    public interface OnMealEditListener {
+        void onEditMeal(Meal meal);
+        void onMealDeleted();
+    }
 
-    public MealAdapter(ArrayList<Meal> dataSet) {
+    private ArrayList<Meal> dataSet = new ArrayList<Meal>();
+    private OnMealEditListener editListener;
+
+    public MealAdapter(ArrayList<Meal> dataSet, OnMealEditListener editListener) {
         this.dataSet.addAll(dataSet);
+        this.editListener = editListener;
     }
 
     @NonNull
@@ -35,19 +43,35 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         final Meal meal = dataSet.get(i);
         viewHolder.meal = meal;
         viewHolder.name.setText(meal.getName());
-        viewHolder.calories.setText(String.valueOf(meal.getCalories()));
+        viewHolder.calories.setText(String.valueOf(meal.getCalories()) + " cal");
+
+        GradientDrawable dot = new GradientDrawable();
+        dot.setShape(GradientDrawable.OVAL);
+        dot.setColor(meal.getColor());
+        viewHolder.colorDot.setBackground(dot);
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Stats.getInstance().consume(meal.getCalories());
+                Stats.getInstance().consume(meal.getCalories(), meal.getName(), meal.getColor());
             }
         });
         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Meals.getInstance().getMeals().remove(k);
-                refresh();
+                if (editListener != null) {
+                    editListener.onEditMeal(meal);
+                }
                 return true;
+            }
+        });
+        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Meals.getInstance().getMeals().remove(meal);
+                if (editListener != null) {
+                    editListener.onMealDeleted();
+                }
             }
         });
     }
@@ -61,17 +85,21 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         public Meal meal;
         public TextView name;
         public TextView calories;
+        public TextView deleteButton;
+        public View colorDot;
 
         public MealViewHolder(@NonNull View itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.recyclerview_item_card_name);
             calories = (TextView)itemView.findViewById(R.id.recyclerview_item_card_cal);
+            deleteButton = (TextView)itemView.findViewById(R.id.recyclerview_item_card_delete);
+            colorDot = itemView.findViewById(R.id.recyclerview_item_card_color);
         }
     }
 
-    public void refresh() {
+    public void refresh(ArrayList<Meal> meals) {
         dataSet.clear();
-        dataSet.addAll(Meals.getInstance().getMeals());
+        dataSet.addAll(meals);
         notifyDataSetChanged();
     }
 }

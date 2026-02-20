@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:minWidth="100dp"
-    android:layout_height="match_parent"
-    android:layout_margin="5dp">
-    
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="5dp"
-        android:elevation="5dp">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/meal_item_height"
+    android:layout_marginStart="@dimen/spacing_lg"
+    android:layout_marginEnd="@dimen/spacing_lg"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:layout_marginBottom="@dimen/spacing_xs"
+    android:background="@drawable/card_border"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/spacing_md"
+    android:paddingEnd="@dimen/spacing_md">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+    <View
+        android:id="@+id/recyclerview_item_card_color"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="@dimen/spacing_sm" />
 
-            <TextView
-                android:id="@+id/recyclerview_item_card_cal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/main_cal_placeholder"
-                android:layout_margin="5dp"
-                android:textColor="@color/colorDark"
-                android:textStyle="bold"
-                />
+    <TextView
+        android:id="@+id/recyclerview_item_card_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/recyclerview_item_card_name_placeholder"
+        android:textColor="@color/colorForeground"
+        android:textSize="@dimen/text_body" />
 
-            <TextView
-                android:id="@+id/recyclerview_item_card_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recyclerview_item_card_name_placeholder"
-                android:layout_margin="5dp"
-                android:textColor="@color/colorDark"
-                />
+    <TextView
+        android:id="@+id/recyclerview_item_card_cal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_cal_placeholder"
+        android:textColor="@color/colorMuted"
+        android:textSize="@dimen/text_body" />
 
-
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/recyclerview_item_card_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_button_delete"
+        android:textColor="@color/colorMuted"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="@dimen/spacing_md" />
 
 </LinearLayout>

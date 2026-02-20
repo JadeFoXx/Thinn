@@ -27,6 +27,26 @@ public class Meals {
         this.meals = meals;
     }
 
+    public ArrayList<Meal> getFoods() {
+        ArrayList<Meal> foods = new ArrayList<>();
+        for (Meal meal : meals) {
+            if ("food".equals(meal.getType())) {
+                foods.add(meal);
+            }
+        }
+        return foods;
+    }
+
+    public ArrayList<Meal> getDrinks() {
+        ArrayList<Meal> drinks = new ArrayList<>();
+        for (Meal meal : meals) {
+            if ("drink".equals(meal.getType())) {
+                drinks.add(meal);
+            }
+        }
+        return drinks;
+    }
+
     public void save(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

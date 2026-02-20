@@ -24,7 +24,26 @@
     <string name="settings_label_neck">Neck Circumference</string>
     <string name="settings_label_waist">Waist Circumference</string>
     <string name="settings_label_hip">Hip Circumference</string>
-    <string name="settings_label_activiy">Physical Activity</string>
-    <string name="settings_label_delta">Calorie Deficit</string>
+    <string name="settings_label_activity">Activity Level</string>
+    <string-array name="activity_levels">
+        <item>Sedentary (1-2x/week)</item>
+        <item>Light (2-3x/week)</item>
+        <item>Moderate (3-5x/week)</item>
+        <item>Very Active (6-7x/week)</item>
+        <item>Extra Active (2x/day)</item>
+    </string-array>
+    <string name="settings_label_deficit">Calorie Deficit</string>
     <string name="settings_button_save">Save</string>
+    <string name="main_label_remaining">remaining today</string>
+    <string name="main_consumed_suffix">" consumed"</string>
+    <string name="main_goal_suffix">" goal"</string>
+    <string name="main_label_meals">Meals</string>
+    <string name="main_label_food">Food</string>
+    <string name="main_label_drinks">Drinks</string>
+    <string name="main_button_add">+</string>
+    <string name="main_button_delete">✕</string>
+    <string name="dialog_title_add_meal">New Meal</string>
+    <string name="dialog_title_edit_meal">Edit Meal</string>
+    <string name="dialog_button_save">Save</string>
+    <string name="main_swipe_hint">swipe for settings</string>
 </resources>
