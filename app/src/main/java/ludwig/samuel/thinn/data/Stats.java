@@ -2,8 +2,8 @@ package ludwig.samuel.thinn.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,8 +17,7 @@ import ludwig.samuel.thinn.util.Today;
 
 public class Stats extends BaseObservable {
     private static Stats instance;
-    private int caloriesConsumed = 0;
-    private int caloriesLeft = 0;
+    private int calorieLimit = 0;
     private Deque<Integer> recentCaloriesConsumed = new ArrayDeque<>();
     private long lastDate;
 
@@ -31,17 +30,14 @@ public class Stats extends BaseObservable {
 
     @Bindable
     public int getCaloriesConsumed() {
+        int caloriesConsumed = 0;
+        for(Integer consumed : recentCaloriesConsumed) {
+            caloriesConsumed += consumed;
+        }
         return caloriesConsumed;
     }
 
-    public void setCaloriesConsumed(int consumed) {
-        caloriesConsumed = consumed;
-        notifyPropertyChanged(BR.caloriesConsumed);
-    }
-
     public void consume(int amount) {
-        this.caloriesConsumed += amount;
-        this.caloriesLeft -= amount;
         if(amount > 0) {
             recentCaloriesConsumed.push(amount);
         }
@@ -51,11 +47,21 @@ public class Stats extends BaseObservable {
 
     @Bindable
     public int getCaloriesLeft() {
+        int caloriesLeft = calorieLimit;
+        for(Integer consumed : recentCaloriesConsumed) {
+            caloriesLeft -= consumed;
+        }
         return caloriesLeft;
     }
 
-    public void setCaloriesLeft(int caloriesLeft) {
-        this.caloriesLeft = caloriesLeft;
+    @Bindable
+    public int getCalorieLimit() {
+        return calorieLimit;
+    }
+
+    public void setCalorieLimit(int calorieLimit) {
+        this.calorieLimit = calorieLimit;
+        notifyPropertyChanged(BR.caloriesConsumed);
         notifyPropertyChanged(BR.caloriesLeft);
     }
 
@@ -68,7 +74,7 @@ public class Stats extends BaseObservable {
     }
 
     public void undo() {
-        if(recentCaloriesConsumed.size() > 0) {
+        if(!recentCaloriesConsumed.isEmpty()) {
             consume(-1* recentCaloriesConsumed.pop());
         }
     }
@@ -76,8 +82,7 @@ public class Stats extends BaseObservable {
     public void save(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("caloriesConsumed", caloriesConsumed);
-        editor.putInt("caloriesLeft", caloriesLeft);
+        editor.putInt("calorieLimit", calorieLimit);
         editor.putString("recentCaloriesConsumed", dequeToJson(recentCaloriesConsumed));
         editor.putLong("lastDate", lastDate);
         editor.commit();
@@ -85,8 +90,7 @@ public class Stats extends BaseObservable {
 
     public void restore(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("thinn_stats", Context.MODE_PRIVATE);
-        caloriesConsumed = sharedPreferences.getInt("caloriesConsumed", 0);
-        caloriesLeft = sharedPreferences.getInt("caloriesLeft", User.getInstance().getDailyCalories());
+        calorieLimit = sharedPreferences.getInt("calorieLimit", User.getInstance().getDailyCalories());
         recentCaloriesConsumed =  jsonToString(sharedPreferences.getString("recentCaloriesConsumed", null));
         lastDate = sharedPreferences.getLong("lastDate", -1);
         if(lastDate == -1 || lastDate != Today.get()) {
@@ -103,7 +107,7 @@ public class Stats extends BaseObservable {
         Gson gson = new Gson();
         Deque<Integer> deque = new ArrayDeque<>();
         if(json != null) {
-            deque.addAll((List<Integer>) gson.fromJson(json, new TypeToken<List<Integer>>() {
+            deque.addAll(gson.fromJson(json, new TypeToken<List<Integer>>() {
             }.getType()));
         }
         return deque;
@@ -111,8 +115,7 @@ public class Stats extends BaseObservable {
 
     private void purge(Context context) {
         lastDate = Today.get();
-        setCaloriesLeft(User.getInstance().getDailyCalories());
-        setCaloriesConsumed(0);
+        setCalorieLimit(User.getInstance().getDailyCalories());
         recentCaloriesConsumed.clear();
         save(context);
     }

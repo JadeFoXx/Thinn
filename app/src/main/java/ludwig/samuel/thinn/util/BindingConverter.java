@@ -1,6 +1,6 @@
 package ludwig.samuel.thinn.util;
 
-import android.databinding.InverseMethod;
+import androidx.databinding.InverseMethod;
 import android.widget.EditText;
 
 public class BindingConverter {
